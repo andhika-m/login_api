@@ -69,18 +69,23 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 16.0),
             Text('Angkatan: ${this.widget.angkatan}'),
             SizedBox(height: 16.0),
-            Text('Akademik Information:'),
-            for (var akm in this.widget.akm)
-              Column(
-                children: [
-                  Text('Semester: ${akm['semester']}'),
-                  if (akm['ip'] != null)
-                    Text('IP: ${akm['ip']}'),
-                  if (akm['ipk'] != null)
-                    Text('IPK: ${akm['ipk']}'),
-                  SizedBox(height: 16.0),
-                ],
-              ),
+            Text('Informasi Akademik:'),
+            DataTable(
+              columns: [
+                DataColumn(label: Text('Semester')),
+                DataColumn(label: Text('IP')),
+                DataColumn(label: Text('IPK')),
+              ],
+              rows: this.widget.akm.map<DataRow>((akm) {
+                return DataRow(
+                  cells: [
+                    DataCell(Text('${akm['semester']}')),
+                    DataCell(Text(akm['ip'] != null ? '${akm['ip']}' : '-')),
+                    DataCell(Text(akm['ipk'] != null ? '${akm['ipk']}' : '-')),
+                  ],
+                );
+              }).toList(),
+            ),
 
           ],
         ),
